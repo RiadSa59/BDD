@@ -1,0 +1,29 @@
+% Auteur 1: Riad SABIR 
+
+femme(mia).
+femme(jody).
+femme(yolande).
+
+aime(vincent, mia).
+aime(vincent, pierre).
+aime(marcellus, mia).
+aime(mon_chou, lapin).
+aime(lapin, mon_chou).
+
+jaloux(X,Y) :- aime(X,Z) , aime(Y,Z), not(X=Y).
+
+% Question 4
+% femme(X).
+
+% Question 5	
+% femme(X), aime(vincent, X).
+
+% Question 6
+% not femme(X), aime(vincent, X).
+% Le type homme n'est pas defini.
+% on peut r�medier ce probleme en definissant
+% le type homme
+
+% Question 7
+est_jaloux(X) :- jaloux(X, _).
+

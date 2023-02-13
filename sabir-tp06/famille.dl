@@ -1,0 +1,73 @@
+% Auteur1: Riad SABIR 
+
+% Question 18
+pere(tom,amy).
+pere(jack,fred).
+pere(tony,carol2).
+pere(fred,carol3).
+
+mere(grace,amy).
+mere(amy,fred).
+mere(carol1,carol2).
+mere(carol2,carol3).
+
+% Question 19
+parent(X,Y) :- mere(X,Y).
+parent(X,Y) :- pere(X,Y).
+
+ancetre(X,Y) :- parent(X,Y).
+ancetre(X,Y) :- parent(X,Z), ancetre(Z,Y).
+
+% le predicat ancetre(X,Y) verifie si X est un ancetre de Y, ç.à.d 
+% si il y a un chemin de X à Y.
+
+
+% Question 20
+
+%RESULTATS
+
+%DES> pere(X,Y)
+% 
+% {                                           
+%   pere(fred,carol3),
+%   pere(jack,fred),
+%   pere(tom,amy),
+%   pere(tony,carol2)
+% }
+% Info: 4 tuples computed.
+
+% DES> mere(X,Y).
+% 
+% {                                           
+%   mere(amy,fred),
+%   mere(carol1,carol2),
+%   mere(carol2,carol3),
+%   mere(grace,amy)
+% }
+% Info: 4 tuples computed. 
+
+% DES> ancetre(X,Y).
+% 
+% {                                           
+%   ancetre(amy,carol3),
+%   ancetre(amy,fred),
+%   ancetre(carol1,carol2),
+%   ancetre(carol1,carol3),
+%   ancetre(carol2,carol3),
+%   ancetre(fred,carol3),
+%   ancetre(grace,amy),
+%   ancetre(grace,carol3),
+%   ancetre(grace,fred),
+%   ancetre(jack,carol3),
+%   ancetre(jack,fred),
+%   ancetre(tom,amy),
+%   ancetre(tom,carol3),
+%   ancetre(tom,fred),
+%   ancetre(tony,carol2),
+%   ancetre(tony,carol3)
+% }
+% Info: 16 tuples computed.
+
+
+% Question 21
+ 

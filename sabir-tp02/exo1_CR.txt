@@ -1,0 +1,132 @@
+--- Auteur: Riad SABIR 
+
+
+------ 1. Création des tables ------
+
+CREATE TABLE Articles (
+  aid INTEGER NOT NULL,
+  anom VARCHAR(50) NOT NULL,
+  acoul VARCHAR(20) NOT NULL,
+  PRIMARY KEY (aid)
+);
+
+CREATE TABLE Fournisseurs(
+  fid INTEGER NOT NULL,
+  fnom VARCHAR(50) NOT NULL,
+  fad VARCHAR(50) NOT NULL,
+  PRIMARY KEY (fid)
+);
+
+CREATE TABLE Catalogue(
+   fid INTEGER NOT NULL,
+   aid INTEGER NOT NULL,
+   prix REAL NOT NULL,
+   PRIMARY KEY (aid,fid),
+   FOREIGN KEY(fid) REFERENCES Fournisseurs (fid) ON UPDATE CASCADE ON DELETE CASCADE,
+   FOREIGN KEY(aid) REFERENCES Articles (aid) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+
+
+
+
+--Q1
+Il y a eu une erreur déclenchée lors de l'ajout des tuples dans la table Catalogue.
+Cela est dû au fait que les tuples de fournisseurs n'avaient pas encore été insérés, 
+violant ainsi la contrainte d'intégrité de la table. Dans ce cas on a changé l'ordre d'insertion de données.
+
+
+
+--Q2
+La requête recupere la table qui contient la description de la base de données: tables, contraintes et clés.
+
+
+
+--Q3
+=> INSERT INTO Catalogue VALUES (6,1,30000000000000000000000000000000000000000000000000000000000000000000000000000000);
+ERREUR:  valeur en dehors des limites : dépassement
+
+On change le type de données de la colonne prix: 
+ALTER TABLE Catalogue
+  ALTER COLUMN prix SET DATA TYPE NUMERIC(8,2);
+
+
+
+--Q4
+=> INSERT INTO Catalogue VALUES (10,1,550);
+ERREUR:  une instruction insert ou update sur la table « catalogue » viole la contrainte de clé
+étrangère « catalogue_fid_fkey »
+DETAIL:  La clé (fid)=(10) n'est pas présente dans la table « fournisseurs ».
+
+
+--Q5
+On rajoute la contrainte qui ne permet pas l'insertion des prix negatifs:
+
+ALTER TABLE catalogue 
+    ADD CONSTRAINT prix_valid CHECK (prix > 0);
+
+
+test:
+=> INSERT INTO Catalogue VALUES (6,1,-10);
+ERREUR:  la nouvelle ligne viole la contrainte de vérification « catalogue » de la relation « prix_valid »
+DETAIL:  La ligne en échec contient (6, 1, -10.00)
+
+
+--Q6
+EXEMPLE DE SUPRESSION: 
+
+
+=> SELECT * FROM fournisseurs;
+ fid |         fnom         |                       fad                        
+-----+----------------------+--------------------------------------------------
+   1 | kiventout            | 59 rue du Chti, F-75001 Paris
+   2 | Big Red Tool and Die | 4 My Way, Bermuda Shorts, OR 90305, USA
+   3 | Perfunctory Parts    | 99999 Short Pier, Terra Del Fuego, TX 41299, USA
+   4 | Alien Aircaft Inc.   | 2 Groom Lake, Rachel, NV 51902, USA
+   5 | Autolux              | Piazza del Paris, 8, I-20121 Milano
+   6 | HappyCake            | De Ruijterkade 11, 1011 AA Amsterdam
+(6 rows)
+
+=> SELECT * FROM catalogue;
+ fid | aid |   prix    
+-----+-----+-----------
+   1 |   1 |     36.10
+   1 |   2 |     42.30
+   1 |   3 |     15.30
+   1 |   4 |     20.50
+   1 |   5 |     20.50
+   1 |   6 |    124.23
+   1 |   7 |    124.23
+   1 |   8 |     11.70
+   1 |   9 |     75.20
+   2 |   1 |     16.50
+   2 |   7 |      0.55
+   2 |   8 |      7.95
+   3 |   8 |     12.50
+   3 |   9 |      1.00
+   4 |   4 |     57.30
+   4 |   5 |     22.20
+   4 |   8 |     48.60
+   5 |  11 | 234556.00
+   2 |  13 |      1.23
+(19 rows)
+
+=> DELETE FROM fournisseurs WHERE fid=1;
+DELETE 1
+=> SELECT * FROM catalogue;
+ fid | aid |   prix    
+-----+-----+-----------
+   2 |   1 |     16.50
+   2 |   7 |      0.55
+   2 |   8 |      7.95
+   3 |   8 |     12.50
+   3 |   9 |      1.00
+   4 |   4 |     57.30
+   4 |   5 |     22.20
+   4 |   8 |     48.60
+   5 |  11 | 234556.00
+   2 |  13 |      1.23
+(10 rows)
+
+
+

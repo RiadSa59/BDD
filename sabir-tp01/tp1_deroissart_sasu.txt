@@ -1,0 +1,72 @@
+-------------------------------------------
+Auteurs : Riad SABIR  |
+-------------------------------------------
+
+
+Ici se trouvent les requêtes correspondantes aux questions posées dans le TP1
+
+-------------
+|Exercice 1 |
+-------------
+
+Q1) RA> Project [fnom] (fournisseurs);
+
+Q2) RA> Select [FAD ='Paris'] (Fournisseurs);
+
+Q3) RA> Project [FNOM](select[fad='Paris'](fournisseurs));
+
+Q4) RA> Project[ANOM](select[ACOUL = 'vert'](articles));
+
+Q5) RA> Project[AID](select[PRIX <= 20](catalogue));
+
+Q6) RA> project[FID](select[PRIX<=20](catalogue));
+
+Q7) RA> project[FID](select[PRIX >= 10 and PRIX <=20](catalogue));
+temp1(FID:INTEGER)
+
+Q8) RA> project[FID](select[PRIX <= 20](catalogue)) INTERSECT project[FID] (select[PRIX >= 10](catalogue));
+
+Q9) RA> project [AID](select[ACOUL = 'vert'](articles)) union project [AID](select[ACOUL = 'rouge'](articles));
+
+RA> project [AID](select[ACOUL = 'vert'](articles) union select[ACOUL = 'rouge'](articles));
+
+Q10)RA> project [AID](select[ACOUL = 'vert'](articles)) intersect project [AID](select[ACOUL = 'rouge'](articles));
+
+
+-------------
+|Exercice 3 |
+-------------
+
+Q1) RA> Project [ANOM] (articles join catalogue);
+
+Q2) RA> Project [anom,prix,fnom](catalogue join articles join fournisseurs);
+
+Q3) RA> project[fid](select[acoul = 'rouge'](articles join fournisseurs));
+
+Q4) RA> project[fnom](select[prix<20](catalogue join fournisseurs));
+
+
+Q5) RA> project[fid](select[prix>10000](catalogue join fournisseurs));
+temp2(FID:INTEGER)
+
+
+Q6) RA> project[fnom,fad](select[prix>1000](catalogue join fournisseurs));
+
+
+Q7) RA> project[aid](select[acoul='vert'](Articles)) times project[aid](select[acoul='rouge'](Articles));
+
+Q8) RA> project [aid](articles) minus project[aid] (catalogue);
+
+Q9) RA> project[anom]((project [aid](articles) minus project[aid] (catalogue)) join Articles);;
+
+Q10) project[fid](select[acoul='rouge'](Articles) join Catalogue) intersect project[fid](select[acoul='vert'](Articles) join Catalogue);
+
+Q11) RA> project[fnom](select[acoul='noir'](Articles join Catalogue join Fournisseurs));
+
+Q12) RA> project[a1, f1](select[a1=a2 and f1 <> f2]((rename[a1,f1](project[aid,fid](Catalogue))) times rename[a2, f2](project[aid, fid](Catalogue))));
+
+Q13) RA> project[fid, fnom](Fournisseurs) minus project[fid, fnom](select[acoul='noir'](Articles join Catalogue join Fournisseurs)) union project[fid, fnom](select[acoul='argente'](Articles join Catalogue join Fournisseurs));
+
+
+
+

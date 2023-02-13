@@ -1,0 +1,17 @@
+% Auteur1: Riad SABIR
+
+% Question 24
+doit_argent(X,Y).
+
+
+% Question 25
+ evite(X,Y).
+
+% On observe que prolog n'arrete pas l'affichage 
+% quand il y a des cycles dans le programme.
+
+% Question 26
+% Differences entre Datalog et Prolog:
+%   - les mauvais usages du langage ne sont pas détectés,
+%     dans ce cas on a une erreur logique dans le programme 
+%     qui est la cause de la non-terminaison.

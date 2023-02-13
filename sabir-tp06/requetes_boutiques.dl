@@ -1,0 +1,10 @@
+% Auteur1: Riad SABIR
+
+%Question 9
+coul_unique(C) :- group_by(articles(A, N, C), [C], R=count, R=1).
+
+%Question 10
+deuxrouges(X) :- group_by(articles(Aid,Anom,'rouge'), catalogue(Fid,Aid,_), fournisseurs(Fid,X,_), [X], R=count, R>1).
+
+%Question 11
+bonmarche(X) :- catalogue(Fid, Aid, Prix), fournisseurs(Fid,X,_), articles(Aid, Anom, _), Prix < 10.

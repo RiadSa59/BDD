@@ -1,0 +1,20 @@
+% Auteur1: Riad SABIR 
+
+homme(barbier).
+homme(maire).
+rase(barbier, H) :- homme(H), not(rase(H,H)).
+
+% Question 27
+% DES> /consult barbier_paradoxe.dl
+% 
+% Info: Consulting barbier_paradoxe.dl...
+%   homme(barbier).
+%   homme(maire).
+%   rase(barbier,H) :-
+%     homme(H),
+%     not rase(H,H).
+%   end_of_file.
+% Info: 3 rules consulted.
+% Info: Computing predicate dependency graph...
+% Info: Computing strata...
+% Warning: Non stratifiable program.
